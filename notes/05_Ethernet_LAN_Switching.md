@@ -12,7 +12,7 @@
 - There can be as many switches as necessary in a LAN
   - Switches operate at layer 2
 - Ethernet Frame consists of a header and a trailer
-  - 26 bytes in total (header + trailer)
+  - 26 bytes in total (header:22 + trailer:4)
   - Fields lengths: 7, 1, 6, 6, 2, 4
   - **Header**
     - Preamble
