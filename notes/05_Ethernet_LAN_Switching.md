@@ -47,4 +47,16 @@
     - If the destination MAC address is not in the MAC Address table, the switch will flood all interfaces (except the one the frame came in on).
   - Known Unicast Frame: FORWARD
     - If the destination MAC Address is in the MAC Address table, the switch will only forward the frame to the mapped interface.
-  
+
+## Part 2
+
+- Min/Max Ethernet Frame Size
+  - **NOTE.** The Preamble and SFD is not usually considered part of the header
+  - Therefore the Ethernet header + trailer is 18 bytes
+    - Destination (6), Source (6), Type/Length (2), FCS (4)
+  - **Ethernet Min Size is 64 bytes**
+    - Header: 18 bytes
+    - Min payload size: 46 bytes
+      - If the payload is <46 bytes, then padding is added
+      - 0x00 is used for padding
+- **ARP** Address Resolution Protocol
