@@ -60,3 +60,26 @@
       - If the payload is <46 bytes, then padding is added
       - 0x00 is used for padding
 - **ARP** Address Resolution Protocol
+  - Ethernet 0x0806
+  - ARP Request
+  - Broadcast Ethernet Frame
+  - ARP Reply
+    - Unicast Ethernet Frame
+- **Ping**
+  - ICMP Echo Request
+  - ICMP Echo Reply
+- **ARP Table**
+  - `arp -a` to view on PC
+  - `show arp` to view on Cisco IOS
+- **MAC Address Table**
+  - A table of MAC addresses discovered by a Cisco IOS device
+  - `show mac address-table`
+    - Displays the table
+  - "Aging" after 5 minutes
+    - MAC addresses are removed if they are idle
+  - `clear mac address-table dynamic`
+    - Removes all dynamically-learned MAC address from the MAC Address Table
+  - `clear mac address-table dynamic address <mac-address>`
+    - Removes a specific dynamically-learned MAC address from the MAC Address Table
+  - `clear mac address-table dynamic interface <interface>`
+    - Removes all dynamically-learned MAC addresses from an interface
