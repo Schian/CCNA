@@ -91,6 +91,6 @@ Two addresses cannot be assigned to a host, regardless of the mask, the Network 
     - `ip address <ip address> <subnet mask>`
       - `ip address 10.255.255.254 255.0.0.0`
     - `no shutdown`
-      - Brings the interface up
+      - Enables the interface, or brings the interface up
   - Set a description for an interface
     - `description <description>`
