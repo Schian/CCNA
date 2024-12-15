@@ -37,5 +37,30 @@
   - **Most specific** matching route = the matching route with the **longest prefix length**.
   - This is different than switches, which look for an **exact** match in the MAC address table to forward frames.
 
-## Part 2 - Static Routes
+## Part 2 - Static Routing
 
+- **Static Routes** are set by the engineer/admin to send packets to the next hop.
+  - Will have **code S** in the routing table.
+  - When a router receives a packet, it will be de-encapsulated (remove L2 header/trailer) and the router will inspect the L3 header.
+  - The router checks the routing table and does one of two things:
+    - Forwards to the most-specific matching route.
+    - Drop the packet if there is not a route specific enough
+- **Default Gateway** are set on end hosts (Clients, servers, etc) allowing them to access destinations outside their own network.
+  - Also called the **default route** and **Gateway of last resort**.
+  - Will have __code S*__ in the routing table
+  - All unknown destinations are forwarded to 0.0.0.0/0
+    - This is the least specific matching route and everything is forwarded to this instead of being dropped.
+  - Often used to direct traffic to the internet
+
+### Configuration
+
+- Each static route configured requires the destination and next hop.
+- For **two-way reachability** each planned route requires two static routes set
+  - One each way
+- **Commands**
+  - Setting a static route
+    - `R1(config)# ip route <IP address> <netmask> <next hop IP>`
+    - `R1(config)# ip route <IP address> <netmask> <exit interface>`
+    - `R1(config)# ip route <IP address> <netmask> <exit interface> <next hop ip`
+  - Setting the default
+    - `R1(config)# ip route 0.0.0.0 0.0.0.0 <next hop IP>`
