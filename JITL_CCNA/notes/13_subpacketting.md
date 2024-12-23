@@ -72,6 +72,7 @@
 
 ## Additional Resources
 
+- [IPv4 Subnetting Practice](https://subnetipv4.com/)
 - [Subnetting Questions](https://subnetting.org/)
 - [Subnetting Practice](https://subnettingpractice.com/)
 
