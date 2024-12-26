@@ -167,7 +167,7 @@
 - **Every group size is a multiple of every subnet value to the left**
   - 10.3.3.197/30 has a group size of 4
     - The other tips take more steps than necessary
-    - Start incremening from .192 (the /26 subnet)
+    - Start incrementing from .192 (the /26 subnet)
       - .192 -> .196 -> .200
 - **Subtract instead of add**
   - Use any of the above the speed tips to get close and subtract
