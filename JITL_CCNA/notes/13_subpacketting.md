@@ -78,7 +78,7 @@
 
 ## Subnetting Mastery Video Series
 
-[Playlist](https://www.youtube.com/playlist?list=PLIFyRwBY_4bQUE4IB5c4VPRyDoLgOdExE)
+[Subnetting Mastery Playlist](https://www.youtube.com/playlist?list=PLIFyRwBY_4bQUE4IB5c4VPRyDoLgOdExE)
 
 ### Draw the Cheat Sheet
 
@@ -86,11 +86,14 @@
 2. Subtract top row from **256**
 3. From /32, list the CIDR notations. Write from right-to-left.
 
-|                   |     |     |     |     |     |     |     |     |
-|:-----------------:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
-| **Group Size**    | 128 | 64  | 32  | 16  | 8   | 4   | 2   | 1   |
-| **Subnet Mask**   | 128 | 192 | 224 | 240 | 248 | 252 | 254 | 255 |
-| **CIDR Notation** | /25 | /26 | /27 | /28 | /29 | /30 | /31 | /32 |
+|                 |     |     |     |     |     |     |     |     |
+|:---------------:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
+| **Group Size**  | 128 | 64  | 32  | 16  | 8   | 4   | 2   | 1   |
+| **Subnet Mask** | 128 | 192 | 224 | 240 | 248 | 252 | 254 | 255 |
+| **4th Octet**   | /25 | /26 | /27 | /28 | /29 | /30 | /31 | /32 |
+| **3rd Octet**   | /17 | /18 | /19 | /20 | /21 | /22 | /23 | /24 |
+| **2nd Octet**   | /9  | /10 | /11 | /12 | /13 | /14 | /15 | /16 |
+| **1st Octet**   | /1  | /2  | /3  | /4  | /5  | /6  | /7  | /8  |
 
 - The following seven attributes can be found with the cheatsheet
   - Network ID
@@ -102,9 +105,9 @@
   - CIDR/Subnet Mask
 
 1. Use the CIDR/Subnet mask to find the column on the cheat sheet
-  a. Note the group size for this CIDR/Subnet mask.
-  c. Start at ".0" in the relevant octet.
-  d. Increment by the group size until you pass the target IP
+    1. Note the group size for this CIDR/Subnet mask.
+    2. Start at ".0" in the relevant octet.
+    3. Increment by the group size until you pass the target IP
 2. The number BEFORE the target IP is the Network ID
 3. The number AFTER the target IP is the Next Network
 4. The IP address BEFORE the Next Network is the Broadcast IP
@@ -124,26 +127,49 @@
   - CIDR/Subnet Mask: /28 and 255.255.255.240
 
 1. Use the CIDR/Subnet mask to find the column on the cheat sheet
-  a. The provided IP has the prefix /28, this maps to .240 (255.255.255.240)
-  b. Note the Group Size for this CIDR/Subnet mask. This is 16
-  c. Start at ".0" in the relevant octet. Octet 4 in this case.
-  d. Increment by the group size until you pass the target IP (.55)
-    1. .0 -> .16 -> .32 -> .48 -> .65
+    - The provided IP has the prefix /28, this maps to .240 (255.255.255.240)
+    - Note the Group Size for this CIDR/Subnet mask. This is 16
+    - Start at ".0" in the relevant octet. Octet 4 in this case.
+    - Increment by the group size until you pass the target IP (.55)
+      - .0 -> .16 -> .32 -> .48 -> .65
 2. The number BEFORE the target IP is the Network ID
-  a. Our target is .55, the increment before this is .48
-  b. **Network ID Found**
+    - Our target is .55, the increment before this is .48
+    - **Network ID Found**
 3. The number AFTER the target IP is the Next Network
-  a. Our target is .55, the increment after this is .65
-  b. **Next Network Found**
+    - Our target is .55, the increment after this is .65
+    - **Next Network Found**
 4. The IP address BEFORE the Next Network is the Broadcast IP
-  a. .64 minus 1 is .63
-  b. **Broadcast IP Found**
+    - .64 minus 1 is .63
+    - **Broadcast IP Found**
 5. The IP address AFTER the Network ID is the the First Host
-  a. .48 plus 1 is .49
-  b. **First Host Found**
+    - .48 plus 1 is .49
+    - **First Host Found**
 6. The IP address BEFORE the Broadcast IP is the Last Host
-  a. .63 minus 1 is .62
-  b. **Last Host Found**
+    - .63 minus 1 is .62
+    - **Last Host Found**
 7. The total number of IP address is the group size (-2 for useable)
-  a. Group size is 16
-  b. **Total IP Addresses Found**
+    - Group size is 16
+    - **Total IP Addresses Found**
+
+---
+
+### Tips for speed
+
+- **Multiply Group Size by 10**
+  - 10.3.3.85/29
+    - Instead of .0 -> .8 -> .16 -> ... -> .86
+    - Do: Group size x 10 = .80 -> .86
+- **Double or triple after multiplying by 10**
+  - 10.3.3.170/29
+    - Group size x 10 = .80 x 2 = .160 -> .168 -> .176
+- **All group sizes are a multiple of 128**
+  - Can start incrementing from .128 instead of .0 for every group size.
+- **Every group size is a multiple of every subnet value to the left**
+  - 10.3.3.197/30 has a group size of 4
+    - The other tips take more steps than necessary
+    - Start incremening from .192 (the /26 subnet)
+      - .192 -> .196 -> .200
+- **Subtract instead of add**
+  - Use any of the above the speed tips to get close and subtract
+    - 10.3.3.117/29
+    - .128 -> .120 -> .112
