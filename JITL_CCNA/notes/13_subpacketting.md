@@ -206,7 +206,7 @@ A typical VLSM question is: Assign subnetworks from a given network across varia
 
 1. There are two main steps for solving VLSM problems:
     1. Determine the required sub-network sizes, and
-    2. Allocate IP blocks from largets to smallest
+    2. Allocate IP blocks from largest to smallest
 
 ![VLSM Example](./images/vlsm.png)
 
