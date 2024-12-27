@@ -199,3 +199,29 @@ We need to determine 2^*n* >= 100 and then add *n* to /18. The quickest way woul
   - Condition: Each subnetwork must contain 50 IP addresses
 
 We can quickly determine the the size of the sub-networks will be /26. Therefore we can do /26 - /20 = 6 for the remaining number of host bits, 2^6 = 64 which is the correct answer.
+
+## Variable Length Subnet Mask (VLSM)
+
+A typical VLSM question is: Assign subnetworks from a given network across variable size network segments. In the image below we are given the network `9.9.9.0/24` and required minimum size subnetworks across the network.
+
+1. There are two main steps for solving VLSM problems:
+    1. Determine the required sub-network sizes, and
+    2. Allocate IP blocks from largets to smallest
+
+![VLSM Example](./images/vlsm.png)
+
+- The problem in the above image will require:
+  - 2x /26 networks
+  - 2x /27 networks
+  - 2x /28 networks
+  - 2x /30 networks (or /31 if point-to-point is allowed)
+
+- This would give the following subnets:
+  - 9.9.9.0/26    From R2 - 50
+  - 9.9.9.64/26   From R3 - 31
+  - 9.9.9.128/27  From R2 - 25
+  - 9.9.9.160/27  From R3 - 19
+  - 9.9.9.192/28  From R2 - 10
+  - 9.9.9.208/28  From R3 - 12
+  - 9.9.9.224/30  From R1 - R2
+  - 9.9.9.228/30  From R1 - R3
