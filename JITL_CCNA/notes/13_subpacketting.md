@@ -114,6 +114,7 @@
 5. The IP address AFTER the Network ID is the the First Host
 6. The IP address BEFORE the Broadcast IP is the Last Host
 7. The total number of IP address is the group size (-2 for useable)
+   1. For octets 3, 2 and 1 use 2^(32 - CIDR)
 
 ---
 
@@ -173,3 +174,28 @@
   - Use any of the above the speed tips to get close and subtract
     - 10.3.3.117/29
     - .128 -> .120 -> .112
+
+## Fixed Length Subnet Mask (FLSM)
+
+- FLSM Questions are usually made up of three parts
+  - Starting Point
+  - Ending Point
+  - Condition
+- The three parts are usually in the form of one of the following:
+  - Starting network size
+  - Number of sub-networks
+  - Size of sub-network
+
+- If you start with a /18, what size sub-network would you need to create 100 sub-networks?
+  - Starting Point: /18
+  - Ending Point: What size sub-network?
+  - Condition: Create 100 sub-networks
+
+We need to determine 2^*n* >= 100 and then add *n* to /18. The quickest way would be to draw out a table and find the correct value (or use the cheatsheet, remember 2^0 is on the right and 2^7 is on the left). In this case *n* = 7 therefore /18 + 7 = /25 is the size of each sub-network.
+
+- If you start with a /20, how many subnetworks could you create that could contain 50 IP addresses?
+  - Starting Point: /20
+  - Ending Point: How many subnetworks?
+  - Condition: Each subnetwork must contain 50 IP addresses
+
+We can quickly determine the the size of the sub-networks will be /26. Therefore we can do /26 - /20 = 6 for the remaining number of host bits, 2^6 = 64 which is the correct answer.
