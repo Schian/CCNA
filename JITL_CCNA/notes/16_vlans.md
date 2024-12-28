@@ -74,6 +74,8 @@ The **Native VLAN**, defaulted to VLAN 1, will not be `802.1Q` tagged by a switc
     - Best practice is to set this to an unused VLAN
     - **MUST BE THE SAME VLAN ON ALL SWITCHES**
 - Configure interface - **Router**
+  - `R1(config)#int g0/0`             - Enter the interface config mode
+  - `R1(config-if)#no shutdown`       - Set to no shutdown before continuing
   - `R1(config-if)#interface g0/0.10` - Creates a subinterface
   - `R1(config-subif)#encapsulation dot1q <VLAN ID>`
   - `R1(config-subif)#ip address <IP> <netmask>`
