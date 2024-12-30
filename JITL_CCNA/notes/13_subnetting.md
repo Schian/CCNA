@@ -152,9 +152,7 @@
     - Group size is 16
     - **Total IP Addresses Found**
 
----
-
-### Tips for speed
+## Tips for speed
 
 - **Multiply Group Size by 10**
   - 10.3.3.85/29
