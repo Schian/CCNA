@@ -42,6 +42,31 @@ The **Native VLAN**, defaulted to VLAN 1, will not be `802.1Q` tagged by a switc
 
 **Router on a Stick** `ROAS` is used by a router to route between multiple VLANs using a single interface on the router and connected switch. The switch is configured as a regular trunk, but the router's interface is configured using **subinterfaces** ([See Configure Interface - Router](#part-2---config))
 
+## Part 3
+
+- **Native VLAN on a Router (ROAS)**
+  - If you need or want to use the native VLAN for efficiency or performance reasons (at the expense of security), the router will need to be configured.
+  - There are two methods to configure this. ([See Configure VLAN on a Router (ROAS)](#part-3---config))
+
+- **Multilayer Switches**
+  - Capable of both switching and routing making it "layer 3 aware"
+  - IP addresses can be assigned  to its interfaces, like a router
+  - Virtual interfaces can be created for each VLAN (and IP addresses assigned to those interfaces)
+  - Routes can be configured
+  - Can be used for inter-VLAN routing
+    - Removing this burden from the network router
+- **Switch Virtual Interfaces (SVI)**
+  - Virtual interfaces on a multilayer switch
+  - Each PC must be configured to use the SVI as its default gateway **(NOT THE ROUTER)**
+  - The switch will handle the inter-VLAN routing
+  - The switch will route internet and unknown traffic to the router
+    - via default gateway
+- **Conditions for Inter-VLAN Routing via SVI**
+  - The VLAN must exist on the switch
+  - The switch must have at least one access port in the VLAN OR on trunk port that allows the VLAN that is in an up/up state
+  - The VLAN must not be shutdown
+  - The SVI must not be shutdown (SVIs are disabled by default)
+
 ## Configuration
 
 ### Part 1 - Config
@@ -80,3 +105,26 @@ The **Native VLAN**, defaulted to VLAN 1, will not be `802.1Q` tagged by a switc
   - `R1(config-subif)#encapsulation dot1q <VLAN ID>`
   - `R1(config-subif)#ip address <IP> <netmask>`
     - The subinterface number and the VLAN number don't have to match, but it is best practice so as to make it easier to understand.
+
+### Part 3 - Config
+
+- Configure VLAN on a Router (ROAS).
+  - Method 1, configure the subinterface:
+    - `R1(config)#int g0/0.10`
+    - `R1(config-subif)#encapsulation dot1q <VLAN ID> native`
+  - Method 2, Configure the IP address for the native VLAN on the router's physical interface:
+    - `R1(config)#int g0/0`
+    - `R1(config-int)#ip address <IP in subnet> <subnet mask>`
+    - *Specifying the encapsulation isn't necessary*
+- Configure Inter-VLAN routing via SVI
+  - Configure the default route
+    - `SW1(config)#ip routing`                          - Enables Layer 3 routing on the switch
+    - `SW1(config)#interface g0/0`                      - Enter the interface config mode
+    - `SW1(config-if)#no switchport`                    - Configures this port as a 'routed port'. Layer 3 not layer 2 port
+    - `SW1(config-if)#ip address <IP> <subnet>`         - In the example this is a /30, for the point-to-point connection to the router
+    - `SW1(config-if)#exit`                             - Return to global config mode
+    - `SW1(config)#ip route 0.0.0.0 0.0.0.0 <next hop>` - Set the default route
+  - Configure SVIs
+    - `SW1(config)#interface vlan <number>`             - Enter the SVI configuration
+    - `SW1(config-if)#ip address <IP> <subnet>`         - Assign the SVI the IP of the gateway/default route for the VLAN
+    - `SW1(config-if)#no shutdown`                      - Brings the SVI to an up/up state
