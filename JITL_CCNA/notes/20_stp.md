@@ -76,3 +76,13 @@ All collision domains must have a designated port and these are selected by usin
    2. Designated port selection:
       1. Interface on switch with lowest root cost
       2. Interface on switch with lowest bridge ID
+
+## Configuration
+
+### Part 1 - Lab
+
+- View Spanning Tree Information
+  - `SW1#show spanning-tree`
+  - `SW1#show spanning-tree vlan <vlan-ID>` - For a specific VLAN
+  - `SW1#show spanning-tree detail` - Detailed information
+  - `SW1#show spanning-tree summary` - Lists the STP state of each interface
