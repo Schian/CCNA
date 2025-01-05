@@ -64,11 +64,11 @@ VTP has three versions. Version 1 is as described above and version 2 will suppo
 
 - View DTP configuration
   - `SW1#show interfaces g0/0 switchport`
-- Configure DTP
-  - `SW1(config)#switchport mode dynamic desirable`
-  - `SW1(config)#switchport mode dynamic auto`
-- Disable DTP
-  - `SW1(config)#switchport nonegotiate`
+- Configure DTP on the interface
+  - `SW1(config-if)#switchport mode dynamic desirable`
+  - `SW1(config-if)#switchport mode dynamic auto`
+- Disable DTP on the interface
+  - `SW1(config-if)#switchport nonegotiate`
 
 ### VTP
 
