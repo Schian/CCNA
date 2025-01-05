@@ -28,6 +28,36 @@ DTP is a Cisco propriety protocol to allow Cisco switches to dynamically determi
 
 ## VLAN Trunking Protocol (VTP)
 
+VTP allows for VLANs to be configured on a central switch, then propagated and synchronised through a network. This is desirable for a large networks with many VLANs so each switch doesn't have to be manually configured. However, VTP is rarely used and it is recommended not to be used. There are three VTP modes: server, client, and transparent.
+
+- **VTP Server**
+  - Can add/modify/delete VLANs
+  - Store the VLAN database in non-volatile RAM (NVRAM)
+  - Will increase the **revision number** with each VLAN modification
+  - Will advertise the latest version of the VLAN database
+  - **VTP servers also function as VTP clients**
+    - A VTP server will synchronise to another VTP server with a higher revision number
+
+- **VTP Clients**
+  - Cannot add/modify/delete VLANs
+  - Does not store the database
+  - Will only synchronise to the database with the highest revision number
+  - Will advertise their VLAN database
+  - Will forward VTP advertisements to other clients
+
+- **VTP Transparent**
+  - Maintains its own VLAN database in NVRAM
+    - Can add/modify/delete from this
+  - Does not synchronise its VLAN database
+  - Does not advertise its VLAN database
+  - Will forward advertisements that are in the same domain as it.
+
+- The revision number can be reset to 0 by:
+  - Changing the VLAN domain to an unused domain
+  - Changing the VTP mode to transparent
+
+VTP has three versions. Version 1 is as described above and version 2 will support Token Ring VLANs. Version 3 won't be touched on as it is too far beyond the scope.
+
 ## Configuration
 
 ### DTP
@@ -39,3 +69,12 @@ DTP is a Cisco propriety protocol to allow Cisco switches to dynamically determi
   - `SW1(config)#switchport mode dynamic auto`
 - Disable DTP
   - `SW1(config)#switchport nonegotiate`
+
+### VTP
+
+- View VTP configuration
+  - `SW1#show vtp status`
+- Add to domain
+  - `SW1(config)#vtp domain <name>`
+- Set VTP Mode
+  - `SW1(config)#vtp mode <client, server, transparent>`
