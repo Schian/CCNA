@@ -4,6 +4,25 @@
 
 The Spanning Tree Protocol allows for redundancy to be built into network without creating layer 2 loops, known as "Broadcast Storms". This allows the switches themselves to determine an efficient path through the network to a *"root switch"* (called a root bridge). Once a root switch has been designated it will broadcast BPDUs with each switch determining which interface will have the lowest *"root cost"*. When a switch is powered on, it will assume it is the root bridge and only give up its position if a superior BPDU is received.
 
+### Summary - Part 1
+
+1. One switch is elected as a root bridge. All ports on the root bridge are **designated ports** (forwarding state).
+   1. The root bridge is selected by the lowest bridge ID
+2. Each remaining switch will select **ONE** of its interfaces to be its **root port** (forwarding state).
+   1. Ports across from (or connected to) the root port are always **designated** ports
+   2. Root port selection
+      1. Lowest root cost
+      2. Lowest neighbour bridge ID
+      3. Lowest neighbour port ID (if two switches have two connections to each other)
+         1. The **NEIGHBOUR** port ID, not the local port ID
+3. Each remaining collision domain will select ONE interface to be a **designated port** (forwarding state).
+   1. The other port in the collision domain will be **non-designated** (blocking).
+   2. Designated port selection:
+      1. Interface on switch with lowest root cost
+      2. Interface on switch with lowest bridge ID
+
+---
+
 - Spanning Tree Protocol (SPT)
   - **IEEE 802.1D**
   - Switches from all vendors run STP by default
@@ -60,22 +79,10 @@ The non-root switches will select ONE of its interfaces to be its **root port**.
 
 All collision domains must have a designated port and these are selected by using the switch with the lowest root cost, then the lowest bridge ID. The other switch will make its port non-designated (blocking)
 
-### Summary - Part 1
+## Part 2
 
-1. One switch is elected as a root bridge. All ports on the root bridge are **designated ports** (forwarding state).
-   1. The root bridge is selected by the lowest bridge ID
-2. Each remaining switch will select **ONE** of its interfaces to be its **root port** (forwarding state).
-   1. Ports across from (or connected to) the root port are always **designated** ports
-   2. Root port selection
-      1. Lowest root cost
-      2. Lowest neighbour bridge ID
-      3. Lowest neighbour port ID (if two switches have two connections to each other)
-         1. The **NEIGHBOUR** port ID, not the local port ID
-3. Each remaining collision domain will select ONE interface to be a **designated port** (forwarding state).
-   1. The other port in the collision domain will be **non-designated** (blocking).
-   2. Designated port selection:
-      1. Interface on switch with lowest root cost
-      2. Interface on switch with lowest bridge ID
+- **STP States/Timers**
+- **STP BPDU**
 
 ## Configuration
 
@@ -86,3 +93,5 @@ All collision domains must have a designated port and these are selected by usin
   - `SW1#show spanning-tree vlan <vlan-ID>` - For a specific VLAN
   - `SW1#show spanning-tree detail` - Detailed information
   - `SW1#show spanning-tree summary` - Lists the STP state of each interface
+
+### Part 2
