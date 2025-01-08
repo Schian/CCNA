@@ -156,6 +156,9 @@ All collision domains must have a designated port and these are selected by usin
 
 ### Part 2 - Config
 
+- Configure the Spanning Tree Mode
+  - `SW1(config)#spanning-tree mode <mode>`
+    - One of: `mst`, `pvst`, `rapid-pvst`
 - Set a switch as the primary root bridge
   - `SW1(config)#spanning-tree vlan <ID> root primary`
     - This is a shortcut for the following commands (can be seen in `running-config`):
