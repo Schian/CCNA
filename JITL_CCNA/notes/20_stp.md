@@ -81,8 +81,68 @@ All collision domains must have a designated port and these are selected by usin
 
 ## Part 2
 
-- **STP States/Timers**
-- **STP BPDU**
+- **STP States**
+  - There are four Spanning Tree Port states (five, if you include 'disabled').
+    - Root/Designated ports remain stable in a **forwarding** state.
+    - Non-designated ports remain stable in a **blocking** state.
+    - **Listening** and **Learning** are transitional states, stepped through when an interface is activated, or when a **Blocking** port must transition to a **Forwarding** state.
+      - Usually due to a change in network topology.
+  - **Blocking State**
+    - Only receives STP BPDUs, all other traffic is dropped and nothing is forwarded.
+      - In case the interface needs to transition to a forwarding state.
+    - Does not learn MAC addresses
+    - Effectively disabled to prevent loops (broadcast storms)
+  - **Listening State**
+    - Transitional state after an interface has changed from a non-designated to a designated or root role.
+    - This state is 15 seconds long by default.
+      - Set by the **Forward delay** timer.
+    - Only forwards/receives BPDUs, all other traffic is dropped
+    - Does not learn MAC addresses
+    - Used to check-and-verify to ensure that bringing the interface online isn't immediately going to cause loops.
+  - **Learning State**
+    - Transitional state after the listening sate.
+    - This state is 15 seconds long by default.
+      - Set by the **Forward delay** timer.
+    - Only forwards/receives BPDUs, all other traffic is dropped
+    - Does learn MAC addresses and begins to build the MAC table
+    - Used to begin building the MAC table before forwarding traffic, reducing the risk of loops.
+  - **Forwarding State**
+    - A forwarding port operates "as normal"
+    - All traffic and BPDUs are received, forwarded and sent as required.
+    - Learns MAC addresses.
+
+| STP Port State | Send/Receive<br>BPDUs | Frame<br>forwarding<br>(regular traffic) | MAC address<br>learning | Stable/<br>Transitional |
+|:--------------:|:---------------------:|:----------------------------------------:|:-----------------------:|:-----------------------:|
+| Blocking       | NO/YES                | NO                                       | NO                      | Stable                  |
+| Listening      | YES/YES               | NO                                       | NO                      | Transitional            |
+| Learning       | YES/YES               | NO                                       | YES                     | Transitional            |
+| Forwarding     | YES/YES               | YES                                      | YES                     | Stable                  |
+
+- **STP Timers**
+  - - STP timers are to ensure adequate time has passed before transitioning to a forwarding state to avoid accidentally creating loops.
+    - A forwarding interface can move directly to a blocking state. It is not possible to create a loop.
+    - A blocking interface must move through the transitional states.
+  - The root bridge will send a BPDU **Hello** message every 2 seconds to maintain the integrity of the network topology.
+  - An interface will wait the **Max Age** time since it last received a **Hello** BPDU.
+    - This is reset each time a BPDU is received
+    - Default duration is 10 x Hello (20 seconds)
+  - The **Forward Delay** timer determines how long the switch will stay in each transitional state.
+    - 15 seconds for Listening
+    - 15 seconds for Learning
+    - 30 seconds total to transition
+      - +20 seconds if **Max Age** is included.
+
+| STP Timer     | Purpose                                                                                                                                                       | Duration                   |
+|:-------------:|:-------------------------------------------------------------------------------------------------------------------------------------------------------------:|:--------------------------:|
+| Hello         | How often the root bridge sends Hello BPDUs                                                                                                                   | 2 seconds                  |
+| Forward delay | How long the switch will stay in the Listening<br>and Learning states (each state is<br>15 seconds = total 30 seconds)                                        | 15 seconds                 |
+| Max Age       | How long an interface will wait to change the<br>STP topology *after ceasing to receive Hello<br>BPDUs*. The timer is reset every time a BPDU<br>is received. | 20 seconds<br>(10 x Hello) |
+
+- **STP Load Balancing**
+  - With Cisco's PVST it is possible to set different primary and secondary switches for different VLANs. This can help to improve load balancing through the network.
+  - When a switch has been set as primary for a VLAN, it will automatically change its STP priority to 24,576 or 4096 less than the highest priority (lowest value). Whichever is the lower.
+  - Setting a switch to secondary will set the STP priority to 28,672 or 4096 more than the primary. Whichever is the lower.
+  - See [Part 2 - Config](#part-2---config) for commands.
 
 ## Configuration
 
@@ -94,4 +154,22 @@ All collision domains must have a designated port and these are selected by usin
   - `SW1#show spanning-tree detail` - Detailed information
   - `SW1#show spanning-tree summary` - Lists the STP state of each interface
 
-### Part 2
+### Part 2 - Config
+
+- Set a switch as the primary root bridge
+  - `SW1(config)#spanning-tree vlan <ID> root primary`
+    - This is a shortcut for the following commands (can be seen in `running-config`):
+      - `spanning-tree mode pvst`
+      - `spanning-tree extend system-id`
+      - `spanning-tree vlan <ID> priority 24576`
+- Set a switch as the secondary root bridge
+  - `SW1(config)#spanning-tree vlan <ID> root secondary`
+    - This is a shortcut for the following commands (can be seen in `running-config`):
+      - `spanning-tree mode pvst`
+      - `spanning-tree extend system-id`
+      - `spanning-tree vlan <ID> priority 28672`
+- Configure STP port cost
+  - `SW1(config-if)#spanning-tree vlan <ID> cost <value>`
+- Configure STP port priority
+  - `SW1(config-if)#spanning-tree vlan <ID> port-priority <value>`
+    - Must be in increments of 32
