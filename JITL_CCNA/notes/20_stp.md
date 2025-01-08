@@ -150,6 +150,22 @@ At the time I am taking this course, Jeremy is updating it to reflect the CCNA 1
 
 ### PortFast
 
+This feature allows interfaces to bypass the listening and learning states and be set to a forwarding state. This is very useful for interfaces intended for end hosts as there is no risk of a loop being created.
+
+- When a host connects to a switchport the port becomes up/up but cannot send/receive data yet.
+  - Designated port but must take 30 seconds to transition through listening and learning states.
+- Leads to a poor user experience.
+  - "The internet doesn't work"
+  - Wait is unnecessary as there is no risk of a layer 2 loop
+- PortFast sets an interface to a forwarding state
+  - Bypassing listening and learning
+- If configuring for all access ports at global config, this will not affect trunk links
+- By default, cisco switches use PortFast ***Edge***.
+  - There is also PortFast Network, but this is not a CCNA topic
+- Can be configured for trunk ports
+  - Safe if connecting to a Router-on-a-Stick or Virtualisation server.
+  - Can only be configured on a per-port basis.
+
 ### BPDU Guard & BPDU Filter
 
 ### Root Guard
@@ -165,6 +181,7 @@ At the time I am taking this course, Jeremy is updating it to reflect the CCNA 1
   - `SW1#show spanning-tree vlan <vlan-ID>` - For a specific VLAN
   - `SW1#show spanning-tree detail` - Detailed information
   - `SW1#show spanning-tree summary` - Lists the STP state of each interface
+  - `SW1#show spanning-tree interface <ID> detail`
 
 ### Part 2 - Config
 
@@ -190,3 +207,12 @@ At the time I am taking this course, Jeremy is updating it to reflect the CCNA 1
     - Must be in increments of 32
 
 ### STP Toolkit - Config
+
+- **PortFast**
+  - Configure PortFast on an individual access port
+    - `SW1(config-if)#spanning-tree portfast`
+    - `SW1(config-if)# spanning-tree portfast disable`
+  - Configure PortFast on *all access ports*
+    - `SW1(config)#spanning-tree portfast default`
+  - Configure PortFast on a trunk port
+    - `SW1(config-if)#spanning-tree portfast trunk`
