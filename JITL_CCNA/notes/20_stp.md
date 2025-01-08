@@ -144,6 +144,18 @@ All collision domains must have a designated port and these are selected by usin
   - Setting a switch to secondary will set the STP priority to 28,672 or 4096 more than the primary. Whichever is the lower.
   - See [Part 2 - Config](#part-2---config) for commands.
 
+## STP Toolkit
+
+At the time I am taking this course, Jeremy is updating it to reflect the CCNA 1.1 update. He has released some videos improving the STP part of the course but it isn't finalised at this point, as he is devoting more time to the new or changed topics.
+
+### PortFast
+
+### BPDU Guard & BPDU Filter
+
+### Root Guard
+
+### Loop Guard
+
 ## Configuration
 
 ### Part 1 - Lab
@@ -176,3 +188,5 @@ All collision domains must have a designated port and these are selected by usin
 - Configure STP port priority
   - `SW1(config-if)#spanning-tree vlan <ID> port-priority <value>`
     - Must be in increments of 32
+
+### STP Toolkit - Config

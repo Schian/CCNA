@@ -1,5 +1,0 @@
-# STP Toolkit
-
-## PortFast
-
-## Configuration
