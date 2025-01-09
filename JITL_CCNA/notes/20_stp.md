@@ -209,6 +209,29 @@ These features help to prevent unauthorised devices from accessing or altering t
 
 ### Root Guard
 
+Root Guard is used to prevent a port from becoming a Root Port by disabling it if superior BPDUs are received. This enforces the Root Bridge in the network topology.
+
+- The root bridge (switch) should be set, not randomly selected by the network. Consider:
+  - Optimal traffic flow to minimise latencey and congestion
+  - Stability and reliability
+    - Select a switch designed for this role
+
+Within your own LAN, the root bridge can easily be designated by setting its priority to 0. However it might be required to connect your LAN to another LAN (the example given was a Metro Area Network Service Provider). Even if your root bridge priority is 0, its role can be taken by another switch with a lower MAC address. There is where **Root Guard** can be configured to protect your STP topology by preventing your switches from acceping **superior BDPUs** from outside your control.
+
+- Enabling **Root Guard** on switch interfaces that connect to switches outside of your control ensures the root bridge remains inside your LAN.
+  - This can only be configured on a per-port basis.
+  - Cannot be configured as a global default
+- If a **Root Guard** enabled port receives a BPDU, it will enter a **Broken (Root Inconsistent)** state. Effectively disabling it.
+  - It will drop any received frames
+- To re-enable a port disabled by Root Guard:
+  - **First solve the underlying issue**
+    - Normally by contacting the other end and asking them to increase the priority value of their switch
+  - Once the BPDUs reach the set **BPDU max age** (default 20), the ports will automatically re-enable
+
+In the example given, we are the service provider of a Metropolitan Area Network. Our Root Bridge has a bridge priority of 0. A customer wishes to connect our network to use our service. Their Root Bridge also has a bridge priority of 0, but thir MAC address is lower and this would cause their switch to become the root bridge of our network. Luckily, the interfaces they will use to connect to our service has **Root Guard** enabled. This causes those interfaces to enter the **Broken (Root Inconsistent)** state. We get in contact with the network admin of the customer and request they increase the priority value of their root bridge (from 0 to 4096, which will be 4097 since PVST adds 1). Once this is done, those interfaces reach the BPDU max age and automatically re-enable and the customer's network re-converges to use our root bridge.
+
+![Root Guard Solution](./images/root_guard.png)
+
 ### Loop Guard
 
 ## Configuration
@@ -273,3 +296,8 @@ These features help to prevent unauthorised devices from accessing or altering t
     - `SW1(config-if)#spanning-tree bpdufilter disable`
   - Configure BPDU filter on *all PortFast enabled ports*
     - `SW1(config)#spanning-tree portfast bpdufilter default`
+
+- **BPDU Root Guard**
+  - Configure BPDU Root Guard on an individual port
+    - `SW1(config-if)#spanning-tree guard root`
+    - Cannot be configured globally
