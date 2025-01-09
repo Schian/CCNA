@@ -234,6 +234,32 @@ In the example given, we are the service provider of a Metropolitan Area Network
 
 ### Loop Guard
 
+Protects the network from loops by disabling a port if it unexpectedly stops receiving BPDUs, ensuring it does not mistakenly enter the Forwarding state.
+
+- If a link were to become a unidirectional link, there is a greater chance of a layer 2 loop occuring.
+  - Damaged cables
+    - A fibre cable is actually two cables. One for Tx and one for Rx
+  - Faulty connectors or transceivers
+
+![Unidirectional Loop for Loop Guard Protection](./images/unidirectional_loop.png)
+
+- When a **Loop Guard**-enabled port's Max Age timer counts down to 0, it does not become a designated port and does not begin transitioning to a Forwarding state.
+  - It enters the **Broken (Loop Inconsistent)** state
+- If the **Broken (Loop Inconsistent)** port starts receiving BPDUs again, it is automatically re-enabled.
+- **Loop Guard** should be enabled on Root and Non-Designated ports (ports that are supposed to receive BPDUs)
+
+### Note on Loop Guard and Root Guard Mutual Exclusivity
+
+- Loop Guard and Root Guard are mutually exclusive
+  - They cannot be enabled on the same port at the same time
+  - **Root Guard** is meant to prevent *Designated Ports* from becoming *Root Ports*
+  - **Loop Guard** is meant to prevent *Non-Designated or Root Ports* from becoming *Designated Ports*
+- If Loop guard is configured on a port (`spanning-tree guard loop`) and then you configure Root guard (`spanning-tree guard root`), Loop guard will be disabled on the port.
+  - And vice versa
+  - The most recent configuration will remain
+- If Loop Guard is enabled by default (`spanning-tree loopguard default`) and you then configure Root Guard on a port, Loop Guard will be disabled on that port
+  - The more specific configuration (interface vs global) takes effect
+
 ## Configuration
 
 ### Part 1 - Lab
@@ -297,7 +323,15 @@ In the example given, we are the service provider of a Metropolitan Area Network
   - Configure BPDU filter on *all PortFast enabled ports*
     - `SW1(config)#spanning-tree portfast bpdufilter default`
 
-- **BPDU Root Guard**
-  - Configure BPDU Root Guard on an individual port
+- **Root Guard**
+  - Configure Root Guard on an individual port
     - `SW1(config-if)#spanning-tree guard root`
+    - `SW1(config-if)#spanning-tree guard none`
     - Cannot be configured globally
+
+- **Loop Guard**
+  - Configure Loop Guard on an individual port
+    - `SW1(config-if)#spanning-tree guard loop`
+    - `SW1(config-if)#spanning-tree guard none`
+  - Configure Loop Guard on all ports
+    - `SW1(config)#spanning-tree loopguard default`
