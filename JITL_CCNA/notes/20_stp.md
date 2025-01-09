@@ -262,8 +262,9 @@ These features help to prevent unauthorised devices from accessing or altering t
     - `SW1(config-if)#spanning-tree portfast disable`
   - Configure BPDU Guard on *all PortFast enabled ports*
     - `SW1(config)#spanning-tree portfast bpduguard default`
-  - Configure **ErrDisable**
-    - `SW1(config)#errdisable recovery cause <cause>`
+  - Configure **ErrDisable Recovery**
+    - `SW1(config)#errdisable recovery interval <seconds>` - changes the recovery time
+    - `SW1(config)#errdisable recovery cause <cause>` - activates/deactivates ErrDisable Recovery for that cause
     - `SW1(config)#show errdisable recovery`
 
 - **BPDU Filter**
