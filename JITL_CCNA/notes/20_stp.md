@@ -236,7 +236,7 @@ In the example given, we are the service provider of a Metropolitan Area Network
 
 Protects the network from loops by disabling a port if it unexpectedly stops receiving BPDUs, ensuring it does not mistakenly enter the Forwarding state.
 
-- If a link were to become a unidirectional link, there is a greater chance of a layer 2 loop occuring.
+- If a link were to become a unidirectional link, there is a greater chance of a layer 2 loop occurring.
   - Damaged cables
     - A fibre cable is actually two cables. One for Tx and one for Rx
   - Faulty connectors or transceivers
