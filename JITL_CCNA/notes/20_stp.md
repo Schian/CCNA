@@ -168,6 +168,45 @@ This feature allows interfaces to bypass the listening and learning states and b
 
 ### BPDU Guard & BPDU Filter
 
+These features help to prevent unauthorised devices from accessing or altering the network topology. BPDU Guard will disable a port if it receives a BPDU (end-host has been unplugged and a switch plugged in) and BPDU Filter stops a port from sending or processing BPDUs.
+
+- **BPDU Guard** acts a safeguard against an unintended change to the network topology.
+  - Unauthorised switches being plugged into an end-host port
+- A BPDU Guard-enabled port will place the interface into the **error-disabled** state.
+  - In effect, disabling the port.
+- Can be enabled globally or on a per-port basis.
+  - *If enabled globally, it will only effect PortFast-enabled ports.*
+- If a BPDU Guard-enabled port receives a BPDU frame, the switch will place the port into an **ErrDisable** state
+  - To re-enable a port in an ErrDisabled state:
+    - **first solve the underlying issue**
+    - Reset the port `shutdown` then `no shutdown`, or
+    - Enable **ErrDisable Recovery**
+- **ErrDisable Recovery** is a feature to automatically re-enable an err-disabled port after a short period of time
+  - Default time period is 300 seconds (5 minutes)
+
+- **BPDU Filter** prevents a port from sending BPDUs
+  - If enabled on a port-by-port basis, ***STP will effectively be disabled on the port***
+    - Port will not send BPDUs
+    - Port will ignore BPDUs
+  - If enabled globally, it will be activated on ***all PortFast-enabled ports***
+    - Disable on a port-by-port basis
+    - The port will not send BPDUs
+    - If the port receives a BPDU when BPDU filter has been globally enabled:
+      - PortFast and BPDU filter will be disabled
+      - Port will resume normal STP port actions
+
+- **BPDU Guard** and **BPDU Filter** can be enabled on the same port at the same time:
+  - If BPDU filter is enabled in *global config mode* and the port receives a BPDU:
+    - BPDU Filter will be disabled
+    - BPDU Guard will be triggered (the interface will be placed in errdisable)
+  - If BPDU Filter is enabled in *interface config mode* and the port receives a BPDU:
+    - The BPDU will be ignored
+    - BPDU Guard will not be triggered
+- Recommendations:
+  - Enable PortFast and BPDU Guard in any preferred way.
+  - Only enable BPDU Filter by default (in global config mode)
+    - There must be a **VERY** good reason to enable it per-port.
+
 ### Root Guard
 
 ### Loop Guard
@@ -216,3 +255,20 @@ This feature allows interfaces to bypass the listening and learning states and b
     - `SW1(config)#spanning-tree portfast default`
   - Configure PortFast on a trunk port
     - `SW1(config-if)#spanning-tree portfast trunk`
+
+- **BPDU Guard**
+  - Configure BPDU Guard on an individual access port
+    - `SW1(config-if)#spanning-tree bpduguard enable`
+    - `SW1(config-if)# spanning-tree portfast disable`
+  - Configure BPDU Guard on *all PortFast enabled ports*
+    - `SW1(config)#spanning-tree portfast bpduguard default`
+  - Configure **ErrDisable**
+    - `SW1(config)#errdisable recovery cause <cause>`
+    - `SW1(config)#show errdisable recovery`
+
+- **BPDU Filter**
+  - Configure BPDU filter on an individual access port
+    - `SW1(config-if)#spanning-tree bpdufilter enable`
+    - `SW1(config-if)#spanning-tree bpdufilter disable`
+  - Configure BPDU filter on *all PortFast enabled ports*
+    - `SW1(config)#spanning-tree portfast bpdufilter default`
