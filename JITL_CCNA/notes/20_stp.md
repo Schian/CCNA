@@ -250,7 +250,7 @@ These features help to prevent unauthorised devices from accessing or altering t
 - **PortFast**
   - Configure PortFast on an individual access port
     - `SW1(config-if)#spanning-tree portfast`
-    - `SW1(config-if)# spanning-tree portfast disable`
+    - `SW1(config-if)#spanning-tree portfast disable`
   - Configure PortFast on *all access ports*
     - `SW1(config)#spanning-tree portfast default`
   - Configure PortFast on a trunk port
@@ -259,7 +259,7 @@ These features help to prevent unauthorised devices from accessing or altering t
 - **BPDU Guard**
   - Configure BPDU Guard on an individual access port
     - `SW1(config-if)#spanning-tree bpduguard enable`
-    - `SW1(config-if)# spanning-tree portfast disable`
+    - `SW1(config-if)#spanning-tree portfast disable`
   - Configure BPDU Guard on *all PortFast enabled ports*
     - `SW1(config)#spanning-tree portfast bpduguard default`
   - Configure **ErrDisable**
