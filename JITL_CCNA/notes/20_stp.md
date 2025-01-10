@@ -23,7 +23,9 @@ The Spanning Tree Protocol allows for redundancy to be built into network withou
 
 ---
 
-- Spanning Tree Protocol (SPT)
+### STP Overview
+
+- **Spanning Tree Protocol** (STP)
   - **IEEE 802.1D**
   - Switches from all vendors run STP by default
 - Builds redundancy without creating "Broadcast Storms"
@@ -32,7 +34,6 @@ The Spanning Tree Protocol allows for redundancy to be built into network withou
     - Act as the backup
 - Interfaces in a forwarding state behave normally
 - Interfaces in a blocking state only send/receive STP messages
-  - BPDU
 
 - **BPDUs** - Bridge Protocol Data Units
   - Used to determine which ports should be forwarding and which should be blocking
@@ -41,7 +42,7 @@ The Spanning Tree Protocol allows for redundancy to be built into network withou
   - If a BPDU is received, the switch knows the other device is a switch
     - Routers, PCs, etc. Do no use STP
 - Switches elect the **Root Bridge** using the **Bridge ID** field in the **BPDU**
-  - The switch with the **lowest Bridge ID** becomes the Root Bridge
+  - The switch with the **Lowest Bridge ID** becomes the Root Bridge
   - All ports on the root bridge are put in a forwarding state, and other switches in the topology must have a path to reach the root bridge
 
 1. **Bridge ID Structure**
@@ -54,6 +55,7 @@ The Spanning Tree Protocol allows for redundancy to be built into network withou
   - 2^15 == 32,768 (the 16th and most significant bit)
   - This makes the MAC address as a "default tie-breaker"
     - Lowest MAC becomes root
+
 - **Per-VLAN Spanning Tree** (PVST)
   - Allows a separate instance of STP for each VLAN
     - Gives each VLAN to have different interfaces forwarding/blocking
@@ -65,10 +67,12 @@ The Spanning Tree Protocol allows for redundancy to be built into network withou
 
 - When powered on a switch assumes it is the root bridge
 - When a 'superior' BPDU is received (lower bridge ID) it relinquishes its position
-- Once the topology converges and all switches agree on the root bridge only it will send BPDUs
-- The other switches will forward these BPDUs, but not generate their own
+- Once the topology converges and all switches agree on the root bridge only the root bridge will send BPDUs
+  - The other switches will forward these BPDUs, but not generate their own
 
-The non-root switches will select ONE of its interfaces to be its **root port**. The interface wil the lowest *root cost* will be the root port. Root ports are in a forwarding start
+The non-root switches will select ONE of its interfaces to be its **root port**. The interface wil the ***lowest root cost*** will be the root port. Root ports are in a forwarding state.
+
+#### Costs for determining the root cost
 
 | **Speed** | **STP Cost** |
 |:---------:|:------------:|
@@ -155,13 +159,13 @@ This feature allows interfaces to bypass the listening and learning states and b
 - When a host connects to a switchport the port becomes up/up but cannot send/receive data yet.
   - Designated port but must take 30 seconds to transition through listening and learning states.
 - Leads to a poor user experience.
-  - "The internet doesn't work"
+  - "The internet doesn't work" (for thirty seconds)
   - Wait is unnecessary as there is no risk of a layer 2 loop
 - PortFast sets an interface to a forwarding state
   - Bypassing listening and learning
 - If configuring for all access ports at global config, this will not affect trunk links
 - By default, cisco switches use PortFast ***Edge***.
-  - There is also PortFast Network, but this is not a CCNA topic
+  - There is also PortFast *Network*, but this is not a CCNA topic
 - Can be configured for trunk ports
   - Safe if connecting to a Router-on-a-Stick or Virtualisation server.
   - Can only be configured on a per-port basis.
@@ -175,7 +179,7 @@ These features help to prevent unauthorised devices from accessing or altering t
 - A BPDU Guard-enabled port will place the interface into the **error-disabled** state.
   - In effect, disabling the port.
 - Can be enabled globally or on a per-port basis.
-  - *If enabled globally, it will only effect PortFast-enabled ports.*
+  - ***If enabled globally, it will only effect PortFast-enabled ports.***
 - If a BPDU Guard-enabled port receives a BPDU frame, the switch will place the port into an **ErrDisable** state
   - To re-enable a port in an ErrDisabled state:
     - **first solve the underlying issue**
