@@ -176,11 +176,10 @@ These features help to prevent unauthorised devices from accessing or altering t
 
 - **BPDU Guard** acts a safeguard against an unintended change to the network topology.
   - Unauthorised switches being plugged into an end-host port
-- A BPDU Guard-enabled port will place the interface into the **error-disabled** state.
-  - In effect, disabling the port.
 - Can be enabled globally or on a per-port basis.
   - ***If enabled globally, it will only effect PortFast-enabled ports.***
 - If a BPDU Guard-enabled port receives a BPDU frame, the switch will place the port into an **ErrDisable** state
+  - Will be listen as `Errdisable reason` `bpduguard` (shown in a table)
   - To re-enable a port in an ErrDisabled state:
     - **first solve the underlying issue**
     - Reset the port `shutdown` then `no shutdown`, or
@@ -241,6 +240,7 @@ In the example given, we are the service provider of a Metropolitan Area Network
 Protects the network from loops by disabling a port if it unexpectedly stops receiving BPDUs, ensuring it does not mistakenly enter the Forwarding state.
 
 - If a link were to become a unidirectional link, there is a greater chance of a layer 2 loop occurring.
+- Unexpected unidirectional links normally occur due to a layer 1 problem:
   - Damaged cables
     - A fibre cable is actually two cables. One for Tx and one for Rx
   - Faulty connectors or transceivers
