@@ -53,7 +53,7 @@ RSTP is not a timer-based spanning tree algorithm like 802.1D (the original span
 | 10 Mbps   | 100          | 2,000,000     |
 | 100 Mbps  | 19           | 200,000       |
 | 1 Gbps    | 4            | 20,000        |
-| 10 Gbps   | 2            | 2000          |
+| 10 Gbps   | 2            | 2,000         |
 | 100 Gbps  | undefined    | 200           |
 | 1 Tbps    | undefined    | 20            |
 
