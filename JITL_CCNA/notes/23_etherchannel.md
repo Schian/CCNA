@@ -67,7 +67,7 @@ When configuring PAgP the channel group number must the same for all member inte
 
 ## Layer 3 EtherChannel
 
-When an EtherChannel is configure
+An EtherChannel can be configured at layer 3 using routed ports instead of layer 2 switchports, bypassing the "STP problem" altogether. Routed ports do not forward broadcast frames so there is no problem of creating a broadcast storm.
 
 ## Configuration
 
