@@ -74,7 +74,7 @@ An EtherChannel can be configured at layer 3 using routed ports instead of layer
 ### Confusing Interchangeable Names
 
 - `etherchannel` is used when displaying configurations
-- `port-channel` is used when configuring the EtherChannel "as an interface"
+- `port-channel` is used when configuring load balancing
 - `channel-group` is used when configuring interfaces to be part of an EtherChannel
 
 ### Configuration commands
