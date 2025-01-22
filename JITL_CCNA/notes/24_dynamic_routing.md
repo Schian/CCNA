@@ -66,9 +66,9 @@ A router's route table will contain the best route to each destination network i
 | **IGP** | **Metric**                                       | **Description**                                                                                                                                                                            |
 |:-------:|:------------------------------------------------:|:-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | RIP     | Hop Count                                        | Each router in the path counts as one 'hop'. The total<br>metric is the total number of hops to the destination.<br>**Link speed doesn't affect cost. All links are equal**                |
-| EIGRP   | Metric based on bandwith<br>& delay (by default) | Complex formula that can take into account many<br>values. By default, the bandwidth of the **slowest link<br>in the same route and the total delay of all links in the route<br>are used. |
+| EIGRP   | Metric based on bandwidth<br>& delay (by default) | Complex formula that can take into account many<br>values. By default, the bandwidth of the **slowest link<br>in the same route and the total delay of all links in the route<br>are used. |
 | OSPF    | Cost                                             | The cost of each link is calculated based on bandwidth.<br>The total metric is the total cost of each link to the<br>route.                                                                |
-| IS-IS   | Cost                                             | The total metric is the total cost of each link in the<br>route. The cose of each link is **not** automatically<br>calculated by default. All links have a cost of 10<br>by default.       |
+| IS-IS   | Cost                                             | The total metric is the total cost of each link in the<br>route. The cost of each link is **not** automatically<br>calculated by default. All links have a cost of 10<br>by default.       |
 
 ## Administrative Distance
 
