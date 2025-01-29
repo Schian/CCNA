@@ -27,7 +27,7 @@
   - Includes subnet mask information in advertisements
   - Messages are **multicast** to 244.0.0.9
 
-#### `network` command
+### `network` command
 
 The **`network`** command tells the router to:
 
@@ -38,13 +38,42 @@ The **`network`** command tells the router to:
 - Not the prefix in the network command
 - Examples at [RIP Config](#rip---config)
 - The command is classful, so:
-- The router will check its ouwn interfaces for IP addresses that match
+- The router will check its own interfaces for IP addresses that match
   - `network 10.0.0.0` will enable both 10.10.0.0 and 10.0.12.0
 - The router will advertise the network prefix of those interfaces
   - NOT the prefix of the address provided
   - 10.10.0.0/30 not 10.0.0.0/8
 
 ## EIGRP
+
+- **Enhanced Interior Gateway Routing Protocol** (EIGRP)
+- Cisco proprietary*
+  - It was, but has mostly been published
+  - Not widely adopted, mostly seen only on Cisco devices
+- Considered to be an 'advanced - hybrid" distance vector routing protocol
+  - Faster than RIP in responding to changes in the network
+  - No 15 hop-count limit
+- The router will advertise by using a multicast address to 224.0.0.10
+- The only IGP capable of performing **unequal**-cost load-balancing
+  - The router can send more traffic over a lower metric bandwidth (faster connection)
+  - By default it performs ECMP load-balancing over 4 paths (like RIP)
+- The router will have a unique router ID to identify it on the network
+  - The determine the router ID, the router will use one of the following (in order of priority):
+    - Manual configuration
+  - Highest IP address on a loopback interface
+  - Highest IP on a physical interface
+  - Note: this value is not actually an IP address, but a 32-bit number formatted as dotted decimal
+
+### Wildcard masks
+
+- EIGRP can use wildcard masks instead of subnet or network masks
+- Essentially an inverted subnet mask
+- All 1s in the subnet mask are 0 in the equivalent wildcard mask
+  - Thus, all 0s are 1 in the equivalent wildcard mask
+- A 0 in the wildcard mask mean it must match
+  - ie. 172.16.1.0 0.0.0.15
+    - This wildcard mask in binary is 00000000.00000000.00000000.00001111
+  - The first 3 octets and the first 4 bits must match
 
 ## Configuration
 
@@ -59,12 +88,31 @@ The **`network`** command tells the router to:
   - `R1(config-router)#version 2`
 - Turn off auto-summary
   - Stops the router from auto-resolving to classful addresses
+  - `R1(config-router)#no auto-summary`
+- Activate RIP on interfaces
   - `R1(config-router)#network 10.0.0.0`
   - `R1(config-router)#network 172.16.0.0`
-  - **Note**: No netmasks
+  - **Note**: No netmask
+  - See [`network` command](#network-command)
 - Stop interfaces from sending advertisements
   - `R1(config-router)#passive-interface g2/0`
 - Advertise the default route
   - `R1(config-router)#default-information originate`
 
 ### EIGRP - Config
+
+- Show routing protocol information
+  - `R1#show ip protocols`
+- Enter router config mode
+  - `R1(config)#router eigrp 1`
+  - `1` is the AS number and must match between routers
+- Turn off auto-summary
+  - `R1(config-router)#no auto-summary`
+- Activate EIGRP on interfaces
+  - `R1(config-router)#network 10.0.0.0`
+  - `R1(config-router)#network 172.16.1.0 0.0.0.15`
+  - See [Wildcard masks](#wildcard-masks)
+- Stop interfaces from sending advertisements
+  - `R1(config-router)#passive-interface g2/0`
+- Set the router ID
+  - `R1(config-router)#eigrp router-id <value>`
