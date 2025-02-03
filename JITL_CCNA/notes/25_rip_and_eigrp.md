@@ -47,7 +47,7 @@ The **`network`** command tells the router to:
 ## EIGRP
 
 - **Enhanced Interior Gateway Routing Protocol** (EIGRP)
-- Cisco proprietary*
+- *Cisco proprietary*
   - It was, but has mostly been published
   - Not widely adopted, mostly seen only on Cisco devices
 - Considered to be an 'advanced - hybrid" distance vector routing protocol
@@ -74,6 +74,41 @@ The **`network`** command tells the router to:
   - ie. 172.16.1.0 0.0.0.15
     - This wildcard mask in binary is 00000000.00000000.00000000.00001111
   - The first 3 octets and the first 4 bits must match
+
+### EIGRP Metric
+
+- **metric = `bandwidth` + `delay`**
+  - The bandwidth of the **slowest link** + the delay of **all links**
+    - If there are 3 links and one is a 'fast ethernet', this slowest delay is added to all three links
+  - There is more to it than this, but that is for a future certification
+- **Important Terminology**
+  - **While the term distance is used. It is actually the metric. This is unrelated to Administrative Distance**
+  - `Feasible Distance` (FD): This router's metric value to the route's destination.
+    - This is the metric of the whole route
+      - (R1 -> R2 -> R4 -> Connected Network)
+    - The left-hand value from `show ip eigrp topology`
+  - `Reported Distance`: The neighbour's metric value to the route's destination.
+    - aka Advertised Distance
+    - This is the metric as reported by the neighbour interface
+      - ((R1) R2 -> R4 -> Connected Network)
+    - The right-hand value from `show ip eigrp topology`
+  - `Successor`: The route with the lowest metric to the destination
+    - ie The best route
+  - `Feasible Successor`: An alternate route to the destination *which meets the feasibility condition*
+    - ie Not the best route, but complete
+  - `Feasibility Condition`: A route is considered a **feasible successor** if it's **reported distance** is lower than the **successor** route's **feasible distance**.
+    - The next route's right-hand number (pink) is less than the current route's left-hand number (red).
+    - The feasibility condition is a loop prevent mechanism.
+      - Any route that meets the feasibility condition to become a feasible successor won't create a loop.
+
+![Feasibility Condition](./images/feasibility_condition.png)
+
+### Unequal Cost Load Balancing
+
+- EIGRP achieves UCMP by configuring the `variance` value.
+- The `variance` value is used as a multiplier the **Successor's FD**
+  - By default it is set to `1` and only **feasible successor** routes with an FD equal to the FD of the **successor** can be used.
+  - Setting the `variance` to `2` will allowed for traffic to load-balanced across **feasible successor** with an FD of twice the value of the **successor's FD**
 
 ## Configuration
 
@@ -116,3 +151,13 @@ The **`network`** command tells the router to:
   - `R1(config-router)#passive-interface g2/0`
 - Set the router ID
   - `R1(config-router)#eigrp router-id <value>`
+
+#### Lab Config
+
+- Show routing information sources
+  - `R1#show ip eigrp neighbors`
+- Show detailed information of the EIGRP routes
+  - `R1#show ip eigrp topology`
+  - This will display all the routes received and only the best ones are displayed in `show ip route eigrp`
+- Configure variance for UCMP
+  - `R1(config-router)#variance <value>`
