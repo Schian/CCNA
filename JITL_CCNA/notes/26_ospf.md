@@ -54,6 +54,52 @@
 
 ## Part 2
 
+### OSPF Cost
+
+- OSPF's metic is called **cost**
+- Calculated based on the bandwidth of the interface
+  - **Cost** = **Reference** / **Interface-Bandwidth**
+    - The default reference is 100 mbps
+    - All values less than 1 will be converted to 1
+    - All FastEthernet, Gigbit, 10-Gig, etc will have a cost of 1 (by default)
+  - The **Reference** can be changed with:
+    - `R1(config-router)# auto-cost reference-bandwidth <mbps>`
+    - A good rule of thumb is to use a value '1-up' from your current max speed
+      - ie. 1 gbps, use 10 gbps
+    - **Ensure the new reference bandwith is the same on all routers**
+- All loopback interfaces have a cost of 1
+- The interface-bandwidth can be changed
+  - **NOT RECOMMENDED**
+    - Used in other calculations
+  - `R1(config-if)#bandwith <kbps>`
+- The cost can be manually configured with:
+  - `R1(config-if)#ip ospf cost <cost>`
+
+### OSPF Neighbour States
+
+- Making sure that router successfully become OSPF neighbours is the main task in configuring and troubleshooting OSPF
+- Once routers become neighbours, they do all the work of sharing network information
+- When OSPF is first activated:
+  - The routers starts sending OSPF **hello** messages out of the interface
+    - Default **hello timer** is 10 seconds
+    - Multicast to **224.0.0.5**
+    - Encapsulated in IP packets with `89` in the Protocol field
+
+#### Down State
+
+
+
+#### Summary of OSPF Messages
+
+| Type | Name                                          | Purpose                                                                                        |
+|:----:|:---------------------------------------------:|:----------------------------------------------------------------------------------------------:|
+| 1    | **Hello**                                     | Neighbour discovery and maintenance.                                                           |
+| 2    | **Database Description**<br>**(DBD)**         | Summary of the LSDB of the router.<br>Used to check if the LSDB of each router<br>is the same. |
+| 3    | **Link-State Request**<br>**(LSR)**           | Requests specific LSAs from the neighbour.                                                     |
+| 4    | **Link-State Update**<br>**(LSU)**            | Sends specific LSAs to the neighbour.                                                          |
+| 5    | **Link-State Acknowledgement**<br>**(LSAck)** | Used to acknowledge that the router received<br>a message.                                     |
+
+
 ## Part 3
 
 ## Configuration
