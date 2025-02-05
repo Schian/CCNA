@@ -61,17 +61,17 @@
   - **Cost** = **Reference** / **Interface-Bandwidth**
     - The default reference is 100 mbps
     - All values less than 1 will be converted to 1
-    - All FastEthernet, Gigbit, 10-Gig, etc will have a cost of 1 (by default)
+    - All FastEthernet, Gigabit, 10-Gig, etc will have a cost of 1 (by default)
   - The **Reference** can be changed with:
     - `R1(config-router)# auto-cost reference-bandwidth <mbps>`
     - A good rule of thumb is to use a value '1-up' from your current max speed
       - ie. 1 gbps, use 10 gbps
-    - **Ensure the new reference bandwith is the same on all routers**
+    - **Ensure the new reference bandwidth is the same on all routers**
 - All loopback interfaces have a cost of 1
 - The interface-bandwidth can be changed
   - **NOT RECOMMENDED**
     - Used in other calculations
-  - `R1(config-if)#bandwith <kbps>`
+  - `R1(config-if)#bandwidth <kbps>`
 - The cost can be manually configured with:
   - `R1(config-if)#ip ospf cost <cost>`
 
