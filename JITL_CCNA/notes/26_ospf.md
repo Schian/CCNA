@@ -187,7 +187,9 @@
 ### Part 2 - Configuration
 
 - Show detailed OSPF configuration settings for an interface
-  - `R1#show ospf ip interface <intID>`
+  - `R1#show ip ospf interface <intID>`
+- Show OSPF neighbour details
+  - `R1# show ip ospf neighbor`
 - Modify the OSPF cost:
   - Change the **reference bandwidth** (ensure this is the same across all OSPF neighbours)
     - `R1(config-router)#auto-cost reference-bandwidth <mbps>`
