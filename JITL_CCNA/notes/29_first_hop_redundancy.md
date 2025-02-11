@@ -81,4 +81,4 @@ First Hop Redundancy Protocols (FHRP) are used to protect the default gateway us
 - Set the router priority
   - `R1(config-if)#standby <group number> priority <0 - 255>`
 - Enable preemption
-  - `R1(config)#standby 1 preempt`
+  - `R1(config)#standby <group number> preempt`
