@@ -137,7 +137,7 @@ The UDP header is 8 bytes (64 bits) in length and only has four fields:
 - Checksum
   - Provides error checking for the entire UDP datagram
 
-## Comparting the Two
+## Comparing the Two
 
 - TCP provides more features than UDP, but at the cost of additional **overhead**
 - For applications that required reliable communications, TCP is preferred
