@@ -1,6 +1,7 @@
 {
     "cSpell.words": [
         "ASBRs",
+        "autoconfig",
         "BPDU",
         "BPDUs",
         "CCNA",
@@ -29,6 +30,7 @@
         "OSPF",
         "PVST",
         "ROAS",
+        "SLAAC",
         "SNMP",
         "subif",
         "subinterface",
