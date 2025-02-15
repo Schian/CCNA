@@ -37,9 +37,6 @@
 
 ## Configuration
 
-- Apply ACL to an interface
-  - `R1(config-if)#ip access-group {number | name} {in | out}`
-
 - Show the configured standard **numbered** ACLs
   - `R1(config)#show ip access-lists`
 - Show the configured standard **named** ACLs
@@ -56,3 +53,5 @@
 - Configure a standard named ACL
   - `R1(config)#ip access-list standard <acl-name>`
   - `R1(config-std-nacl)#[entry number] {deny | permit} <ip> <wildcard-mask>`
+- Apply ACL to an interface
+  - `R1(config-if)#ip access-group {number | name} {in | out}`
