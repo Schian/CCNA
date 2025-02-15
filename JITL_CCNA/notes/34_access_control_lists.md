@@ -1,4 +1,6 @@
-# Standard Access Control Lists
+# Access Control Lists
+
+## Standard ACLs
 
 - **Access Control Lists (ACLs)** function as a packet filter
   - Instructions for the router to permit or discard traffic
@@ -16,7 +18,7 @@
   - If a packet doesn't match any ACE, the packet is dropped
   - To avoid this, a `permit any` ACE is required
 
-## Standard Numbered ACLs
+### Standard Numbered ACLs
 
 - Numbered ACLs are identified with a number
   - ACL1, ACL 2, etc
@@ -25,7 +27,7 @@
     - This is the *Standard IP* range
 - **Standard ACLS should be applied as close to the destination as possible**
 
-## Standard Named ACLs
+### Standard Named ACLs
 
 - Named ACLS are identified with a name
   - Don't use spaces in the name
@@ -36,6 +38,8 @@
   - This does not change the effect of the ACL
 
 ## Configuration
+
+### Standard ACLs - Configuration
 
 - Show the configured standard **numbered** ACLs
   - `R1(config)#show ip access-lists`
@@ -55,3 +59,5 @@
   - `R1(config-std-nacl)#[entry number] {deny | permit} <ip> <wildcard-mask>`
 - Apply ACL to an interface
   - `R1(config-if)#ip access-group {number | name} {in | out}`
+
+### Extended ACLs - Configuration
