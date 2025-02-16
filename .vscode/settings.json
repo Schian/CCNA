@@ -30,6 +30,8 @@
         "NVRAM",
         "OSPF",
         "PVST",
+        "Resequence",
+        "resequenced",
         "ROAS",
         "SLAAC",
         "SNMP",
