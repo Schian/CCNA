@@ -98,7 +98,7 @@
     - `ip access-list resequence 1 5 10`
     - Resequence ACL 1 with the first entry starting at 5, incrementing by 10 for each following entry
 - Configure a numbered extended ACL
-  - `R1(config)#access-list <number> {permit | deny} <protocol> <src-ip> <dest-ip>`
+  - `R1(config)#ip access-list <number> {permit | deny} <protocol> <src-ip> <dest-ip>`
 - Configure an extended ACL from the ACL config mode
-  - `R1(config)#access-list extended {name | number}`
+  - `R1(config)#ip access-list <number> extended {name | number}`
   - `R1(config-ext-nacl)#[seq-num] {permit | deny} <protocol> <source-ip> [pt-match] [source pt] <dest-ip> [pt-match] [dest-port]`
