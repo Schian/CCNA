@@ -73,7 +73,7 @@
   - `R1(config-if)#lldp receive`
 - Configure the LLDP timer
   - `R1(config)#lldp timer <seconds>`
-- Configure the LLDP holtime
+- Configure the LLDP holdtime
   - `R1(config)#lldp holdtime <seconds>`
 - Configure the LLDP reinit timer
   - `R1(config)#lldp reinit <seconds>`
