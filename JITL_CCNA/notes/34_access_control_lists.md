@@ -25,7 +25,7 @@
 - Different types of ACLs have a different range of numbers that can be used
   - Standard ACLS can used 1-99 and 1300-1999
     - This is the *Standard IP* range
-- **Standard ACLS should be applied as close to the destination as possible**
+- **Standard ACLS should be applied as close to the `destination` as possible**
 
 ### Standard Named ACLs
 
@@ -36,6 +36,32 @@
 - The router may re-order any /32 entries
   - This improves the efficiency of processing the ACL
   - This does not change the effect of the ACL
+
+#### Named ACL Config Mode
+
+- Numbered ACLs can also be configured from *Named ACL Config Mode*
+  - Individual entries can be deleted in this mode
+    - `no [entry number]`
+    - Trying to delete an individual entry in *global config mode* will delete the entire ACL
+  - An ACE can be placed between two other ACEs by specifying the sequence number
+  - ACLs can be resequenced from this mode to help keep the ACL clear and can help with future editing
+    - `ip access-list resequence <acl-id> <starting-seq-num> <increment>`
+
+## Extended ACLs
+
+- The range for Extended ACLs is: **100-199, 2000-2699**
+- Can be matched on more parameters making them much more precise
+  - Also more complex
+- Can be match on port numbers using the following keywords:
+  - `eq` - Equal to port ...
+  - `gt` - Greater than port ...
+  - `lt` - Less than port ...
+  - `neq` - Not equal to port ...
+  - `range <from> <to>` - From port ... to port ...
+- If any extra conditions are specified, they must all match
+  - Close enough isn't good enough
+  - It either matches or it doesn't
+- **Extended ACLs should be applied as close to the `source` as possible**
 
 ## Configuration
 
@@ -61,3 +87,18 @@
   - `R1(config-if)#ip access-group {number | name} {in | out}`
 
 ### Extended ACLs - Configuration
+
+- Delete an ACE from an ACL
+  - `R1(config)#ip access-list standard 1`
+  - `R1(config-std-nacl)#no [entry number]`
+- Insert a new ACE in between two other entries
+  - `R1(config-std-nacl)#[specific sequence number] {deny | permit} <ip> <wildcard-mask>`
+- Resequence the ACL
+  - `R1(config)#ip access-list resequence <acl-id> <starting-seq-num> <increment>`
+    - `ip access-list resequence 1 5 10`
+    - Resequence ACL 1 with the first entry starting at 5, incrementing by 10 for each following entry
+- Configure a numbered extended ACL
+  - `R1(config)#access-list <number> {permit | deny} <protocol> <src-ip> <dest-ip>`
+- Configure an extended ACL from the ACL config mode
+  - `R1(config)#access-list extended {name | number}`
+  - `R1(config-ext-nacl)#[seq-num] {permit | deny} <protocol> <source-ip> [pt-match] [source pt] <dest-ip> [pt-match] [dest-port]`
