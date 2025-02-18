@@ -99,5 +99,4 @@ A reminder of the ports used:
 - Specify the NMS, version and community
   - `R1(config)#snmp-server host <NMS ip> version <SNMP version (2c)> <community string>`
 - Configure the Trap types to send to the NMS
-  - `R1(config)#snmp-server enable traps linkdown linkup`
-  - `R1(config)#snmp-server enable traps config`
+  - `R1(config)#snmp-server enable traps <trap type1, trap type2 etc.>`
