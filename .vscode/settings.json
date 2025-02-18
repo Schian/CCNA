@@ -23,6 +23,7 @@
         "holdtime",
         "HSRP",
         "kbps",
+        "linkdown",
         "LLDP",
         "LSDB",
         "mbps",
