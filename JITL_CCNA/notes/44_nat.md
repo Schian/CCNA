@@ -28,6 +28,8 @@
   - **Outside Global**: The IP address of the *outside* host, from the perspective of the outside network
     - Both Outside Local/Global should be the same in `show ip nat translations`
     - They will only be different if **destination NAT** is being used
+- **Inside/Outside**: Location of the host
+- **Local/Global**: Perspective
 
 ## Part 2
 
