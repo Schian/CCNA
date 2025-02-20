@@ -53,6 +53,8 @@ View the file system with `R1#show file systems`
 
 ### Upgrading the Cisco IOS
 
+#### Copying from a file sever
+
 - View the current version
   - `R1#show version`
 - View the contents of flash
@@ -70,6 +72,8 @@ View the file system with `R1#show file systems`
     - `R1#copy ftp: flash:`
 
 ![Copying with FTP](./images/copying_with_ftp.png)
+
+#### Upgrading the IOS
 
 - Check the contents of flash and confirm the transferred filename
   - `R1#show flash`
