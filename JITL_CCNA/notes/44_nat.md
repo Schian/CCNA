@@ -33,6 +33,27 @@
 
 ## Part 2
 
+### Dynamic NAT
+
+- In **dynamic NAT**, the router dynamically maps *inside local* address to *inside global* addresses as needed
+- An ACL is used to identify which traffic should be translated
+  - If the source IP is **permitted** by the ACL, the source IP will be translated
+  - If the source IP is **denied** by the ACL, the source IP will **NOT** be translated
+    - The traffic won't be dropped, it will still be routed
+- A NAT pool is used to define the available *inside global* addresses
+- If there aren't enough *inside global* IP addresses available, it is called 'NAT pool exhaustion'
+  - If a packet from another inside host arrives and needs NAT but there are no available addresses, the router will drop the packet
+  - Dynamic NAT entries will timeout automatically if not used
+    - They can also be cleared manually
+
+### PAT (Nat Overload)
+
+- Port Address Translation (PAT) translates both the IP address and the port number
+  - It will use a unique port number for each communication flow
+  - A single public IP address can be used by many different internal hosts
+    - Port number field is 16 bits == over 65 000 available ports
+- Because many inside hosts can share a single public IP, PAT is very useful for preserving public IP addresses
+
 ## Part 1 - Configuration
 
 - Show current NAT translations
@@ -51,3 +72,68 @@
   - `R1#show ip nat statistics`
 
 ## Part 2 - Configuration
+
+### Dynamic NAT - Configuration
+
+```cisco
+# Define the inside and outside nat interfaces
+R1(config)#int g0/1
+R1(config-if)#ip nat inside
+R1(config-if)#int g0/0
+R1(config-if)#ip nat outside
+
+# Create the ACL and define the traffic to be translated
+R1(config-if)#exit
+R1(config)#access-list <number> permit <ip address> <wildcard mask>
+
+# Define the pool of inside global IP addresses
+R1(config)#ip nat pool <pool-name> <start ip> <end ip> prefix-length <length>
+
+# Configure dynamic NAT by mapping the ACL to the pool
+R1(config)#ip nat inside source list <acl> pool <pool-name>
+```
+
+### PAT - Configuration
+
+#### Using a Pool
+
+```cisco
+# Almost the same as dynamic NAT
+
+# Define the inside and outside nat interfaces
+R1(config)#int g0/1
+R1(config-if)#ip nat inside
+R1(config-if)#int g0/0
+R1(config-if)#ip nat outside
+
+# Create the ACL and define the traffic to be translated
+R1(config-if)#exit
+R1(config)#access-list <number> permit <ip address> <wildcard mask>
+
+# Define the pool of inside global IP addresses
+# This pool can be much smaller than Dynamic NAT
+R1(config)#ip nat pool <pool-name> <start ip> <end ip> prefix-length <length>
+
+# Configure dynamic NAT by mapping the ACL to the pool
+# Same command EXCEPT for `overload` at the end
+R1(config)#ip nat inside source list <acl> pool <pool-name> overload
+```
+
+#### Using the Router's Outside Interface
+
+```cisco
+# The same at the start
+
+# Define the inside and outside nat interfaces
+R1(config)#int g0/1
+R1(config-if)#ip nat inside
+R1(config-if)#int g0/0
+R1(config-if)#ip nat outside
+
+# Create the ACL and define the traffic to be translated
+R1(config-if)#exit
+R1(config)#access-list <number> permit <ip address> <wildcard mask>
+
+# Configure PAT by mapping the ACL to the interface and enabling overload
+R1(config)#ip nat inside source list <acl> interface <ID> overload
+```
