@@ -55,6 +55,7 @@
         "unconfigured",
         "VLSM",
         "VRRP",
+        "WRED",
         "XXYY"
     ]
 }
