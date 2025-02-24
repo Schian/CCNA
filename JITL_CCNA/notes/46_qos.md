@@ -2,6 +2,8 @@
 
 ## IP Phones, Voice VLANs and Power over Ethernet
 
+### IP Phones and Voice VLANs
+
 - IP Phones use VoIP (Voice over IP) to enable calls over an IP network
   - IP phones are connected to a switch just like any other end host
 - IP phones have an internal 3-port switch
@@ -17,9 +19,9 @@
   - It is considered an access port
   - `show interface <intID> trunk` will show the "Status" as "not-trunking"
 
-<br>
+### Power over Ethernet
 
-- Power over Ethernet (POE) allows Power Sourcing Equipment (PSE) to provide power to Powered Devices (PD) over an ethernet cable
+- **Power over Ethernet** (POE) allows Power Sourcing Equipment (PSE) to provide power to Powered Devices (PD) over an ethernet cable
   - Typically the PSE is a switch and the PDs are IP phones, IP cameras, wireless access points, etc
   - The PSE receives AC power from the outlet, converts it to DC power and supplies that power to the PDs
 - Too much electrical current can damage electrical devices
@@ -27,8 +29,8 @@
     - When a device is connected to a PoE-enabled port, the PSE (switch) sends low power signals and monitors the response to determine how much power the PD needs, if at all
   - If the device needs power, the PSE supplies the power to allowed the PD to boot
   - The PSE continues to monitor the PD and supply the required amount of power
-- *Power policing* can be configured to prevent a PD from taking too much power
-  - **Insert a link here to the config**
+- *Power Policing* can be configured to prevent a PD from taking too much power
+  - [Power Policing Configuration](#voice-vlans-and-poe---configuration)
   - `power inline police` configures power policing with the default settings
     - Disable the port and send a Syslog message if a PD draws too much power
   - Equivalent to `power inline police action errdisable`
@@ -36,6 +38,18 @@
     - Can be re-enabled with `shutdown` followed by `no shutdown`
   - `power inline police action log` does not shut down the interface if the PD draws too much power
     - It will restart the interface and send a Syslog message
+
+#### POE Standards
+
+| **Name**                        | **Standard #**                   | **Watts**     | **Powered<br>Wire Pairs**     |
+|:-------------------------------:|:--------------------------------:|:-------------:|:-----------------------------:|
+| Cisco Inline Power<br>**(ILP)** | No standard<br>Cisco proprietary | 7             | 2                             |
+| PoE (Type 1)                    | 802.3af                          | 15            | 2                             |
+| PoE+ (Type 2)                   | 802.3at                          | 30            | 2                             |
+| UPoE (Type 3)                   | 802.3bt                          | 60            | 4                             |
+| UPoE+ (Type4)                   | 802.3bt                          | 100           | 4                             |
+
+**Note**: UPoE == Universal Power over Ethernet
 
 ## Quality of Service
 
@@ -99,12 +113,12 @@
 
 - Enable a voice VLAN on the switchport
   - `SW1(config)#interface g0/0`
-  - `SW1(config-if)#switchport more access`
+  - `SW1(config-if)#switchport mode access`
   - `SW1(config-if)#switchport voice vlan <number>`
   - The connected PC will send traffic untagged as normal.
   - SW1 will use CDP to tell the phone to its traffic as `VLAN <number>`
     - A second VLAN can be created for the PC 'data' traffic
-  - `SW1(config-if)#access vlan <number>`
+  - `SW1(config-if)#switchport access vlan <number>`
 - Show the "power inline police" information
   - `SW1#show power inline police <interface ID>`
 - Configure default PoE settings on an interface
