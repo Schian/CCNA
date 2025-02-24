@@ -55,11 +55,11 @@
   - Syslog messages will be displayed in the CLI when connected to the device via the console port
   - By default, all messages (level 0 - level 7) are displayed
 - **VTY lines**
-  - Syslog messages will be displayed in the CLI when connected to the device via *Telnet/SSH*
-  - Disabled by default
+  - Syslog messages are **disabled by default** when connected to the device via *Telnet/SSH*
     - Even if `logging monitor <level>` is enabled
     - To display messages `terminal monitor` must be entered
-    - Only active for that session. Must be used every time you connect to a device via Telnet or SSH.
+      - Only active for that session. Must be used every time you connect to a device via Telnet or SSH.
+      - Will use the same severity level as `logging monitor <level>`
 - **Buffer**
   - Syslog messages will be saved to RAM
   - By default, all messages (level 0 - level 7) are saved.
