@@ -85,11 +85,11 @@
 ![Global Synchronisation](./images/global_synchronisation.png)
 
 - A solution to prevent tail drop and TCP global synchronisation is **Random Early Detection** (RED)
-- When the amount of traffic in the queue reaches a certain threshiod, the device will start randomly dropping packets from select TCP flows
+- When the amount of traffic in the queue reaches a certain threshold, the device will start randomly dropping packets from select TCP flows
   - Those TCP flows with dropped packets will reduce the rate at which traffic is sent
   - But TCP global synchronisation is avoided
 - In standard RED, all kinds of traffic are treated the same
-- **Weighted Random Early Detection** (WRED) allows you to control which packets are droped depending on the traffic class
+- **Weighted Random Early Detection** (WRED) allows you to control which packets are dropped depending on the traffic class
 
 ### Part 2
 
