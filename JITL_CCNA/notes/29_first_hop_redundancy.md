@@ -30,6 +30,9 @@ First Hop Redundancy Protocols (FHRP) are used to protect the default gateway us
 
 - Cisco proprietary
 - An **active** and **standby** router are elected
+  - The **active router** is determined in order:
+    1. Highest priority - default 100
+    2. Higherst IP address
 - Multicast IPv4 address
   - v1: `224.0.0.2`
   - v2: `224.0.0.102`
