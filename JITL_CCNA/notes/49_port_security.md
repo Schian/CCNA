@@ -57,8 +57,11 @@
   - `switchport port-security mac-address sticky`
 - When enabled, dynamically-learned secure MAC addresses will be added to the running config
   - `switchport port-security mac-address sticky <MAC>`
+  - Must be written to the startup config to be 'remembered'
+    - `write memory`
 - When the command is issued, all current dynamically-learned secure MAC address will be converted to sticky secure MAC addresses
 - If you issue the `no switchport port-security mac-address sticky` command, all current sticky secure MAC addresses will be converted to regular dynamically-learned secure MAC addresses.
+- Configuring sticky secure MAC addresses is the **ONLY WAY** for the switch to remember a MAC address if a device is unplugged
 
 ## Configuration
 
@@ -76,6 +79,8 @@
   - `SW1(config-if)#switchport port-security violation {shutdown | restrict | protect}`
 - Manually configure a static MAC address to be allowed
   - `SW1(config-if)#switchport port-security mac-address <MAC>`
+- Configure the maximum number of addresses allowed on the interface
+  - `SW1(config-if)#switchport port-security maximum <number>`
 - Re-enable an interface
   - Manually
     - `SW1(config-if)#shutdown`
