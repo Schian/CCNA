@@ -73,3 +73,7 @@
     - All desired validation checks must be in a single command
     - One, two, or all three can be specified
     - Order is insignificant
+- Create and apply an ARP ACL
+  - `SW1(config)#arp access-list <acl-name>`
+  - `SW1(config-arp-nacl)#permit ip host <ip> mac host <mac>`
+  - `SW1(config)#ip arp inspection filter <acl-name> vlan <id>`
