@@ -69,7 +69,7 @@
 - Configure Errdisable Recovery for DAI
   - `SW1(config)#errdisable recovery cause arp-inspection`
 - Configure DAI Optional Checks
-  - `SW1(config)#ip arp inspection {dst-mac | ip | src-mac}`
+  - `SW1(config)#ip arp inspection validate {dst-mac | ip | src-mac}`
     - All desired validation checks must be in a single command
     - One, two, or all three can be specified
     - Order is insignificant
