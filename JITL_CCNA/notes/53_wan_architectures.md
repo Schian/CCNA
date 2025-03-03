@@ -156,5 +156,3 @@
 3. Third
     - Site-to-Site VPNs are typically used to permanently connect two sites over the Internet
     - Remote Access VPNs are typically used to provide on-demand access for end devices that want to securely access company resources while connected to a network which is not secure
-
-## Practical (GRE Configuration)
