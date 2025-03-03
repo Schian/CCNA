@@ -149,3 +149,14 @@ Cloud computing is a model for enabling ubiquitous, convenient, on-demand networ
 | Are more isolated because<br>each VM runs its own OS                              | Less isolated because they all run on the same OS;<br>if the OS crashes, all containers running on it are effected. |
 
 ## Virtual Routing and Forwarding (part 3)
+
+- **VRF** is used to divide a single router into multiple virtual routers
+  - Similar to how VLANs are used to divide a single switch (LAN) into multiple virtual switches (VLANs)
+- It does this by allowing a router to build multiple separate routing tables
+  - Interfaces (Layer 3 only) & routes are configured to be in a specific **VRF** (aka *VRF Instance*)
+  - Router interfaces, SVIs & routed ports on multilayer switches can be configured in a VRF
+- Traffic in one VRF cannot be forwarded out of an interface in another VRF
+  - As an exception, *VRK Leaking* can be configured to allow traffic to pass between VRFs
+- VRF is commonly used by service providers to allow one device to carry traffic from multiple customers
+  - Each customer's traffic is isolated from the others
+  - Each customer IP addresses can overlap without issues
