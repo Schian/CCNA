@@ -5,6 +5,7 @@
 - Virtualisation allows us to break the one-to-on relationship of hardware to OS, allowing multiple OSs to run on a single physical server
 - Each instance is called a VM (Virtual Machine)
 - A **hypervisor** is used to manage and allocate the hardware resources
+  - Also called *VMM* (Virtual Machine Monitor)
   - A **Type 1** hypervisor runs directly on top of the hardware
     - Also called *bare-metal* or *native hypervisor*
     - Most common in data centre environments
@@ -122,5 +123,29 @@ Cloud computing is a model for enabling ubiquitous, convenient, on-demand networ
   - Backups in the cloud are very easy to perform. Data can be mirrored at multiple sites in different geographic locations to support disaster recovery
 
 ## Containers (part 2)
+
+- **Containers** are software packages that contain an app and all dependencies (Bins/Libs) for the contained app to run
+  - Multiple apps can be run in a single container, but this is not how containers are usually used
+- Containers run on a **Container Engine** (ie. Docker Engine)
+  - The container engine is run on a host OS (usually linux)
+- Containers are lightweight (small in size) and include only the dependencies required to run the specific app
+- A **Container Orchestrator** is a software platform for automating the deployment, management, scaling etc. of containers
+  - **Kubernetes** is the most popular container orchestrator
+  - **Docker Swarm** is Docker's container orchestration tool
+  - In small numbers manual operation is possible, but large-scale systems (ie. with *Microservices*) can require thousands of containers
+    - **Microservice Architecture** is an approach to software architecture that divides a larger solution into smaller parts (microservices)
+      - Those microservices all run in containers that can be orchestrated by Kubernetes (or another platform)
+
+![Containers](./images/containers.png)
+
+### VMs vs Containers
+
+| **VMs**                                                                           | **Containers**                                                                                                      |
+|-----------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------|
+| Can take minutes to boot up<br>as each VM runs its own OS                         | Can boot up in milliseconds                                                                                         |
+| Takes up more disk space<br>(gigabytes)                                           | Takes up very little disk space<br>(megabytes)                                                                      |
+| Uses more CPU/RAM resources<br>(each VM must run its own OS)                      | Uses much fewer CPU/RAM resources<br>(shared OS)                                                                    |
+| Are portable and can move between physical<br>systems running the same hypervisor | Are more portable; smaller, faster to boot<br>and Docker containers can be run on<br>nearly any container service   |
+| Are more isolated because<br>each VM runs its own OS                              | Less isolated because they all run on the same OS;<br>if the OS crashes, all containers running on it are effected. |
 
 ## Virtual Routing and Forwarding (part 3)
