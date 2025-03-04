@@ -2,8 +2,10 @@
     "cSpell.words": [
         "ASBRs",
         "autoconfig",
+        "backhaul",
         "BPDU",
         "BPDUs",
+        "BSSID",
         "bursty",
         "CBWFQ",
         "CCNA",
@@ -12,6 +14,7 @@
         "cheatsheet",
         "Connectionless",
         "crytpo",
+        "CSMA",
         "Datagram",
         "DMVPN",
         "DSCP",
@@ -31,6 +34,7 @@
         "HDLC",
         "holdtime",
         "HSRP",
+        "IBSS",
         "kbps",
         "LACP",
         "linkdown",
@@ -38,6 +42,7 @@
         "LSDB",
         "Mbit",
         "mbps",
+        "MBSS",
         "Misconfig",
         "MPLS",
         "Multihomed",
@@ -69,6 +74,8 @@
         "unconfigured",
         "VLSM",
         "VRRP",
+        "WLAN",
+        "WLANs",
         "WRED",
         "XXYY"
     ]
