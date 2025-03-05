@@ -4,27 +4,27 @@
 
 ![802.11 Frame](./images/802.11_frame.png)
 
-- **Frame Control**
+- **Frame Control** (2 bytes)
   - Provides information such as the message type and subtype
-- **Duration/ID**
+- **Duration/ID** (2 bytes)
   - Depending on the message type, this field can indicate:
     - The time (in microseconds) the channel will be dedicated for transmission of the frame
     - The identifier for the association (connection)
-- **Addresses**
+- **Addresses** (6 bytes)
   - Up to four addresses can be present in the 802.11 frame. Which are present and their order depends on the message type
     - Destination Address (DA): Final recipient of the frame
     - Source Address (SA): Original sender of the frame
     - Receiver Address (RA): Immediate recipient of the frame
     - Transmitter Address (TA): Immediate sender of the frame
-- **Sequence Control**
+- **Sequence Control** (2 bytes)
   - Used to reassemble fragments and eliminate duplicate frames
-- **QoS Control**
+- **QoS Control** (2 bytes)
   - Used in QoS to prioritise certain traffic
-- **HT (Hight Throughput) Control**
+- **HT (Hight Throughput) Control** (4 bytes)
   - Added in 801.11n to enable *High Throughput* operations
     - 802.11n is known as '*High Throughput* (HT)' Wi-Fi
     - 802.11ac is known as '*Very High Throughput*' (VHT) Wi-Fi
-- **FCS (Frame Check Sequence)**
+- **FCS (Frame Check Sequence)** (4 bytes)
   - Same as in an Ethernet frame, used to check for errors
 
 ### 802.11 Association Process
