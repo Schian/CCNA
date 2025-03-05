@@ -71,9 +71,9 @@
 
 - **EAP** is an authentication framework
   - Defines a standard set of authentication function that are used by the various *EAP Methods*
-  - EAP is integrated with 802.1x, which provides *port-based network access control*
+  - EAP is integrated with 802.1X, which provides *port-based network access control*
 
-- **802.1x** is used to limit network access for clients connected to a LAN or WLAN until they authenticate
+- **802.1X** is used to limit network access for clients connected to a LAN or WLAN until they authenticate
   - **Supplicant**: The device that wants to connect to the network
     - The client laptop, phone, watch, etc
   - **Authenticator**: The device that provides access to the network
@@ -172,7 +172,7 @@
       - The PSK itself is not sent over the air
       - A four-way handshake is used to generate encryption keys
   - **Enterprise Mode**
-    - 802.1x is used with an authentication server (RADIUS or TACACS+)
+    - 802.1X is used with an authentication server (RADIUS or TACACS+)
     - No specific EAP method is specified, so all are supported
 
 ### WPA Certification
@@ -181,17 +181,17 @@
   - Developed after WEP was proven to be vulnerable
   - Includes the following protocols:
     - TKIP to provide encryption and MIC
-    - 802.1x authentication
+    - 802.1X authentication
 - **WPA2**
   - Released in 2004
   - Includes the following protocols
     - CCMP to provide encryption and MIC
-    - 802.1x authentication
+    - 802.1X authentication
 - **WPA3**
   - Released in 2018
   - Includes the following protocols:
     - GCMP to provide encryption and MIC
-    - 802.1x authentication
+    - 802.1X authentication
   - Also includes the following additional security features
     - **PMF** (Protected Management Frames)
       - Protects 802.11 management frames from eavesdropping and forging
