@@ -1,6 +1,7 @@
 {
     "cSpell.words": [
         "ASBRs",
+        "ASIC",
         "autoconfig",
         "backhaul",
         "BPDU",
@@ -57,8 +58,10 @@
         "Multipoint",
         "nacl",
         "NBAR",
+        "NETCONF",
         "nonegotiate",
         "NVRAM",
+        "opex",
         "OSPF",
         "pagp",
         "PEAP",
@@ -79,6 +82,7 @@
         "switchport",
         "switchports",
         "TACACS",
+        "TCAM",
         "TCPID",
         "TKIP",
         "TPID",
