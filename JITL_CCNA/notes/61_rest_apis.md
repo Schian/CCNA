@@ -31,6 +31,12 @@
 
 ![HTTP Header](./images/http_header.png)
 
+- When an HTTP client sends a request to an HTTP server, the HTTP header includes information like this:
+  - An HTTP Verb (ie. GET)
+  - A URI (Uniform Resource Identifier), indicating the resource it is trying to access
+
+![URI example](./images/uri_example.png)
+
 - The **HTTP Request** can include additional headers which pass additional information to the server
   - An example would be an **Accept** header, which informs the server about the type(s) of data that can be sent back to the client
     - **Accept: application/json**
