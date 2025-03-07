@@ -100,3 +100,92 @@
 - Not all resources have to be cacheable, but cacheable resources MUST be declared as cacheable
 
 ## Part 2 - REST API Authentication
+
+- REST APIs used various types of authentication to verify client identity and secure access to resources
+  - These are also called **methods** or **schemes**
+- Four type of authentication for the CCNA are:
+- **Basic Authentication**
+  - Sends a username and password in every request, encoded in Base64
+- **Bearer Authentication**
+  - Uses a toke (bearer token) as an HTTP header in each request to verify the client's identity
+- **API Key Authentication**
+  - Requires a unique, static key, typically included as an HTTP header, to authenticate API requests
+- **OAuth2.0**
+  - A secure framework that grants access via access tokens, commonly used for delegated access and third-party authentication
+
+![HTTP Header Breakdown](./images/http_header_breakdown.png)
+
+### Basic Authentication
+
+- **Basic Authentication** includes a username and password in the HTTP header of each API request for authentication
+- These credentials are **encoded** in Base64 format, but not **encrypted**
+  - Easily decoded
+  - Always use HTTPS (TLS) for security
+- The username and password are sent in the format `username:password`, encoded in Base64
+  - For example, `jeremy:ccna` would be sent as `amVyZW15OmNjbmE=`
+- **Advantages**
+  - Simple and easy to implement
+- **Disadvantages**
+  - Since credentials are sent in every request, attackers could steal them if the connection is not properly secured
+  - Even if using HTTPS for encryption, relying solely on a `user:pass` combination isn't particularly secure
+
+![REST Basic Auth](./images/rest_basic_auth.png)
+
+### Bearer Authentication
+
+- **Bearer Authentication** is a form of token-based authentication
+  - A **token** is used instead of a `user:pass`
+  - The client first obtains a token by authenticating with an authorisation server
+    - This can be done using **basic authentication** or another method
+  - For each API call, the client includes the token in the HTTP Authorisation header
+    - `Authorization: Bearer ya29.a0ARrdaM8`
+- The term **bearer** means that anyone who possesses the token can use it
+  - If an attacker steals the token, they can make API calls as if they were the legitimate user
+  - To mitigate against this, **tokens expire** after a set period of time
+- **Advantages**
+  - More secure than **Basic Authentication** (no need to transmit the same `user:pass` for every API call)
+  - Tokens expire, so a stolen token will only be temporarily valid
+- **Disadvantages**
+  - If a token is stolen, the attacker can access the API until it expires
+  - Tokens need to be refreshed periodically, adding extra complexity to implement
+  - Should only be used with HTTPS
+
+![REST Bearer Auth](./images/rest_bearer_auth.png)
+
+### API Key Authentication
+
+- **API Key Authentication** uses a **static key** issued by the API provider
+  - The client uses this key in each API call for authentication
+  - Unlike **bearer tokens**, the **API key** is static and remains valid until revoked
+- API keys can be sent in:
+  - The HTTP Authorisation header (recommended, with HTTPS)
+  - The URL (e.g., add `?api_key=abcd1234` to the end of the URL)
+    - Not recommended! URLs are often logged by web servers, proxies, browsers, etc.
+  - A cookie (sometimes used for browser-based APIs)
+- **Advantages**
+  - Easier to implement than **Bearer Authentication** (no need to refresh tokens)
+  - Good for tracking API usage
+    - Often used by cloud services and third-party APIs
+- **Disadvantages**
+  - If stolen, the key grants full access until revoked
+  - API key must be rotated manually to maintain security, whereas tokens expire automatically
+
+![REST API Key Auth](./images/rest_api_key_auth.png)
+
+### OAuth2.0
+
+- **OAuth 2.0** is a secure authentication framework that is widely used in modern web applications
+  - It provides *access delegation*, granting third-party applications **limited access** to resources on behalf of the resource's owner
+    - There is no need to share the resources owner's credentials with the third party
+- The **OAuth2.0** authentication and authorisation process consists of six steps
+  1. **Client app** requests authorisation from the resource owner (you) to access the resource (eg. your Google Calendar data)
+  2. **Resource owner** grants authorisation by logging into their account (eg. Google account) and giving permission
+  3. **Client app** exchanges the authorisation grant for an access token from the auth server
+  4. **Auth server** provides an access token to the client app
+  5. **Client app** sends the access token to the resource server (eg. Google's server hosting calendar data) to request the resource
+  6. **Resource server** validates the access token and provides the requested resource (calendar data) to the client app
+- The **access token** granted in step 4 functions just like the token used in **bearer authentication**
+  - It grants access to the specified resource within the appropriate scope of access (eg read-only access)
+  - Access tokens expire after a short period, OAuth2.0 uses **refresh tokens** (granted by the Auth server) to obtain new access tokens without requiring the user to log in every time.
+
+![REST OAuth2.0](./images/rest_oauth2.0.png)
