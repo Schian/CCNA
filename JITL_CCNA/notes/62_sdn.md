@@ -31,7 +31,7 @@
 - There are three different roles for switches in SD-Access
   - **Edge nodes** - Connect to end hosts
   - **Border nodes** - Connect to devices outside of the SD-Access domain (ie. WAN router)
-  - **Control nodes** - Use **LISP** (Locator ID Separator Protocol) to perform various control plan functions
+  - **Control nodes** - Use **LISP** (Locator ID Separation Protocol) to perform various control plan functions
 - You can add SD-Access on top of an existing network (*brownfield deployment*) if your network hardware and software support it
   - DNA Center won't configure the underlay in this case
 - A new deployment (*greenfield deployment*) will be configured by DNA Centre to use to optimal SD-Access underlay
