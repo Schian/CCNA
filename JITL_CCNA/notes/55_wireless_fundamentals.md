@@ -109,7 +109,7 @@ Wireless networks have some issues that we need to deal with
 - A protocol is used to determine the best path through the mesh
   - Similar to how dynamic routing protocols are used to determine the best path to a destination
 
-![Mesh Basic Service Set](./images/mbss)
+![Mesh Basic Service Set](./images/mbss.png)
 
 - Most wireless networks aren't standalone networks
   - They are a way for wireless clients to connect to the wired network infrastructure
